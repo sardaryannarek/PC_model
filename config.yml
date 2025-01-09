@@ -1,0 +1,56 @@
+# General Training Settings
+train_dataset: "data/pt_datasets/train.pt"   # Path to the training dataset in .pt format
+test_dataset: "data/pt_datasets/test.pt"     # Path to the testing dataset in .pt format
+batch_size: 512                             # Training batch size
+max_epochs: 300                               # Maximum number of epochs
+checkpoint_dir: 'logs_all/logs/PCNet_lr1e-4_layers0/last-v1.ckpt'   # Path to directory with a checkpoint to resume training (set to null for fresh training)
+resume_version_tensorboard: 0             #
+
+# Early Stopping Settings
+early_stopping:
+  enabled: true                              # Enable early stopping
+  patience: 10                               # Number of epochs with no improvement to stop training
+  monitor: "val/total_loss"                        # Metric to monitor for early stopping
+  mode: "min"                                # Mode for early stopping (min or max)
+
+# Optimizer Settings
+optimizer:
+  type: "AdamW"                              # Optimizer type (e.g., AdamW, SGD)
+  learning_rate: 5e-5 
+  weight_decay: 3e-2                      # Learning rate
+
+# Scheduler Settings
+#scheduler:
+#  enabled: true                              # Enable learning rate scheduler
+#  type: "ReduceLROnPlateau"                  # Scheduler type
+#  params:                                    # Parameters for the scheduler
+#    factor: 0.1                              # Factor by which the learning rate will be reduced
+#    patience: 3                              # Number of epochs with no improvement before reducing LR
+#    min_lr: 1e-6                             # Minimum learning rate
+#  monitor: "val/total_loss"                        # Metric to monitor for the scheduler
+#  mode: "min"                                # Mode for the scheduler (min or max)
+
+#scheduler:
+#  enabled: true
+#  type: "CosineAnnealingWarmRestarts"
+#  params:
+#    T_0: 10  # Number of epochs for the first restart
+#    T_mult: 2  # Multiplicative factor for successive cycle lengths
+#    eta_min: 1e-5
+
+scheduler:
+  enabled: false
+  type: "CosineAnnealingLR"
+  params:
+    T_max: 25
+    ##eta_min: 1e-5
+
+# Model Settings
+layers_to_train: 0                           # Number of transformer layers to unfreeze from the back
+
+# Logging and Saving
+logging:
+  dynamic_log_dir: true                      # Automatically create log directory based on hyperparameters
+  log_dir_base: "test_logs"                       # Base directory for logs and checkpoints
+  tensorboard_enabled: true                  # Enable TensorBoard logging
+  checkpoint_save_interval: 1                # Save checkpoint every N epochs
