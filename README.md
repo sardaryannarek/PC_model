@@ -1,6 +1,3 @@
-
-
-```markdown
 # Model Training and Inference Guide
 
 This guide explains how to use the provided scripts for training and inference of the punctuation and capitalization model.
